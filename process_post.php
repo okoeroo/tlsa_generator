@@ -19,14 +19,18 @@
         }
 
 
-        /* Input is clean, start processing */
-
-        $cmd = $GEN_TLSA_SH. " " . $domain;
-        $output = exec($cmd);
         print('TLSA record:');
         print ("<br>\n");
         print ("<br>\n");
-        print($output);
+
+        /* Input is clean, start processing */
+
+        $cmd = $GEN_TLSA_SH. " " . $domain;
+        exec($cmd, $output);
+
+        foreach ($output as &$value) {
+            print($value.'<br>');
+        }
         print ("<br>");
 
         return;

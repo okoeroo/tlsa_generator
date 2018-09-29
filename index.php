@@ -1,8 +1,5 @@
 <?php
 
-require_once 'globals.php';
-
-
 echo '<html>';
 echo '   <body>';
 echo '      <form action = "/process_post.php" method = "POST">';
