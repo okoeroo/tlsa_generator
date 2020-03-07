@@ -6,6 +6,7 @@ if [ -z $1 ]; then
 fi
 
 FQDN=$1
+FQDN=$(echo $1 | tr "A-Z" "a-z")
 SHA256="shasum -a 256"
 
 
@@ -42,6 +43,34 @@ function run() {
     echo "_${PORT}._tcp.${FQDN}.     IN TLSA     3 1 1 $HASH"
 }
 
+function dnscheck() {
+    FQDN=$1
+    PORT=$2
+
+#    echo dig TLSA _${PORT}._tcp.${FQDN} +short
+    dig      TLSA _${PORT}._tcp.${FQDN} +short | tail -n1
+}
+
+
+<font
+
+# port 443
+echo -n "Recommended configuration: "
 run $FQDN 443
+
+echo -n "Current DNS configuration: "
+echo -n "_${PORT}._tcp.${FQDN}. IN TLSA "
+dnscheck $FQDN 443
+echo
+
+
+# port 25
+echo -n "Recommended configuration: "
 run $FQDN 25
+
+echo -n "Current DNS configuration: "
+echo -n "_${PORT}._tcp.${FQDN}. IN TLSA "
+dnscheck $FQDN 25
+echo
+
 
